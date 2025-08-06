@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Jeongman Park">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commission</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f4f4f4;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    #report {
+      background: #fff;
+      max-width: 600px;
+      width: 90%;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 1em;
+      color: #005b99;
+    }
+
+    p {
+      line-height: 1.6;
+      margin: 0.5em 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="report"></div>
+  <script>
+    // prompt for user name
+    var rawName = prompt("Enter your name:");
+    var username = rawName ? rawName.trim() : "";
+    if (!username) username = "Salesperson";
+
+    // collect sales amounts
+    var subtotal = 0;
+    var input;
+    do {
+      input = prompt("Enter the dollar amount for your sales a single sale at a time. Enter Done when you are finished.");
+      if (input !== null) {
+        input = input.trim();
+        if (input.toLowerCase() !== "done") {
+          var amt = parseFloat(input);
+          if (!isNaN(amt)) {
+            subtotal += amt;
+          } else {
+            alert("Invalid entry. Please enter a number or 'Done'.");
+          }
+        }
+      }
+    } while (input !== null && input.toLowerCase() !== "done");
+
+    // determine commission rate
+    var rate;
+    if (subtotal <= 0) {
+      rate = 0;
+    } else if (subtotal <= 499.99) {
+      rate = 0.05;
+    } else if (subtotal <= 999.99) {
+      rate = 0.10;
+    } else {
+      rate = 0.15;
+    }
+
+    // calculate totals
+    var commission = subtotal * rate;
+    var earnings = subtotal + commission;
+
+    // format values
+    var subFmt = subtotal.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    var rateFmt = (rate * 100).toFixed(2) + "%";
+    var comFmt = commission.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    var earnFmt = earnings.toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+    // build output HTML
+    var outputHTML =
+      "<h1>Weekly Commission Report</h1>" +
+      "<p>Hello " + username + ", here is your Weekly Commission Report.</p>" +
+      "<p>Your sales total is " + subFmt + ", so your commission rate is " + rateFmt + ".</p>" +
+      "<p>Your total commission is " + comFmt + ".</p>" +
+      "<p>Your total earnings are " + earnFmt + ".</p>";
+
+    // insert into page
+    document.getElementById("report").innerHTML = outputHTML;
+  </script>
+</body>
+
+</html>
