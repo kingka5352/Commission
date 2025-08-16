@@ -44,19 +44,19 @@
   <div id="report"></div>
   <script>
     // prompt for user name
-    var rawName = prompt("Enter your name:");
-    var username = rawName ? rawName.trim() : "";
+    const rawName = prompt("Enter your name:");
+    let username = rawName ? rawName.trim() : "";
     if (!username) username = "Salesperson";
 
     // collect sales amounts
-    var subtotal = 0;
-    var input;
+    let subtotal = 0;
+    let input;
     do {
       input = prompt("Enter the dollar amount for your sales a single sale at a time. Enter Done when you are finished.");
       if (input !== null) {
         input = input.trim();
         if (input.toLowerCase() !== "done") {
-          var amt = parseFloat(input);
+          const amt = parseFloat(input);
           if (!isNaN(amt)) {
             subtotal += amt;
           } else {
@@ -67,7 +67,7 @@
     } while (input !== null && input.toLowerCase() !== "done");
 
     // determine commission rate
-    var rate;
+    let rate;
     if (subtotal <= 0) {
       rate = 0;
     } else if (subtotal <= 499.99) {
@@ -79,17 +79,17 @@
     }
 
     // calculate totals
-    var commission = subtotal * rate;
-    var earnings = subtotal + commission;
+    const commission = subtotal * rate;
+    const earnings = subtotal + commission;
 
     // format values
-    var subFmt = subtotal.toLocaleString("en-US", { style: "currency", currency: "USD" });
-    var rateFmt = (rate * 100).toFixed(2) + "%";
-    var comFmt = commission.toLocaleString("en-US", { style: "currency", currency: "USD" });
-    var earnFmt = earnings.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    const subFmt = subtotal.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    const rateFmt = (rate * 100).toFixed(2) + "%";
+    const comFmt = commission.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    const earnFmt = earnings.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
     // build output HTML
-    var outputHTML =
+    const outputHTML =
       "<h1>Weekly Commission Report</h1>" +
       "<p>Hello " + username + ", here is your Weekly Commission Report.</p>" +
       "<p>Your sales total is " + subFmt + ", so your commission rate is " + rateFmt + ".</p>" +
